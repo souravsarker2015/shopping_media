@@ -52,6 +52,12 @@ def mobile(request, data=None):
         mobiles = Product.objects.filter(category='M')
     elif data == 'xiomi' or data == 'samsung':
         mobiles = Product.objects.filter(category='M').filter(brand=data)
+
+    elif data == 'below':
+        mobiles = Product.objects.filter(category='M').filter(discount_price__lt=10000)
+
+    elif data == 'above':
+        mobiles = Product.objects.filter(category='M').filter(discount_price__gt=10000)
     return render(request, 'app/mobile.html', {'mobiles': mobiles})
 
 
