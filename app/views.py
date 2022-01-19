@@ -15,8 +15,12 @@ def home(request):
     return render(request, 'app/home.html', context)
 
 
-def product_detail(request,pk):
-    return render(request, 'app/productdetail.html')
+def product_detail(request, pk):
+    product = Product.objects.get(id=pk)
+    context = {
+        'product': product,
+    }
+    return render(request, 'app/productdetail.html', context)
 
 
 def add_to_cart(request):
