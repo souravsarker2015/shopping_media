@@ -1,5 +1,7 @@
+from django.contrib import messages
 from django.shortcuts import render
 from .models import *
+from .forms import *
 
 
 def home(request):
@@ -96,12 +98,22 @@ def bottom_wear(request, data=None):
     return render(request, 'app/bottom_wear.html', {'bottom_wears': bottom_wears})
 
 
-def login(request):
-    return render(request, 'app/login.html')
+# def login(request):
+#     return render(request, 'app/login.html')
 
 
-def customerregistration(request):
-    return render(request, 'app/customerregistration.html')
+def customer_registration(request):
+    if request.method == 'POST':
+        form = CustomerRegistrationForm(request.POST)
+        if form.is_valid():
+            messages.success(request, 'Registration has been done successfully!!!')
+            form.save()
+    else:
+        form = CustomerRegistrationForm()
+    context = {
+        'form': form
+    }
+    return render(request, 'app/customerregistration.html', context)
 
 
 def checkout(request):

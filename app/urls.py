@@ -1,5 +1,7 @@
 from django.urls import path
 from app import views
+from django.contrib.auth import views as auth_view
+from .forms import LoginForm
 
 urlpatterns = [
     path('', views.home),
@@ -19,7 +21,9 @@ urlpatterns = [
     path('bottom_wear/', views.bottom_wear, name='bottom_wear'),
     path('bottom_wear_details/<slug:data>', views.bottom_wear, name='bottom_wear_details'),
 
-    path('login/', views.login, name='login'),
-    path('registration/', views.customerregistration, name='customerregistration'),
+    # path('login/', views.login, name='login'),
+    path('account/login', auth_view.LoginView.as_view(template_name='app/login.html', authentication_form=LoginForm), name='login'),
+    path('logout/', auth_view.LogoutView.as_view(next_page='login'), name='logout'),
+    path('registration/', views.customer_registration, name='customerregistration'),
     path('checkout/', views.checkout, name='checkout'),
 ]
