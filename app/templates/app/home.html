@@ -123,6 +123,20 @@
             {% endfor %}
         </div>
     </div>
-    <!-- End 2nd Product Slider -->
+    <!-- End 3rd Product Slider -->
+
+    <!-- 4th Product Slider -->
+    <div class="mx-3">
+        <h2>Laptops</h2>
+        <!-- Slider 4 -->
+        <div class="owl-carousel" id="slider3">
+            {% for laptop in laptops %}
+                <a href="{% url 'product-detail' laptop.id %}" class="btn">
+                    <div class="item"><img src="{{ laptop.product_img.url }}" alt="" height="200px"><span class="fw-bold">{{ laptop.title}}</span><br><span class="fs-5">Taka. {{ laptop.selling_price }}</span></div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- End 4 Product Slider -->
 {% endblock main-content %}
 

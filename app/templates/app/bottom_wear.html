@@ -6,7 +6,7 @@
         <div class="row">
             <div class="col-sm-3">
                 <div class="list-group">
-                    <a href="{% url 'top_wear' %}" class="list-group-item list-group-item-action" aria-current="true">ALL TOP WEARS </a>
+                    <a href="{% url 'bottom_wear' %}" class="list-group-item list-group-item-action" aria-current="true">ALL BOTTOM WEARS / JEANS</a>
                 </div>
 {#                <div class="list-group">#}
 {#                    <a href="{% url 'mobile_details' 'xiomi' %}" class="list-group-item list-group-item-action" aria-current="true">XIOMI</a>#}
@@ -15,7 +15,7 @@
 {#                    <a href="{% url 'mobile_details' 'samsung' %}" class="list-group-item list-group-item-action" aria-current="true">SAMSUNG</a>#}
 {#                </div>#}
                 <div class="list-group">
-                    <a href="{% url 'top_wear_details' 'below' %}" class="list-group-item list-group-item-action" aria-current="true">BELOW < 1000</a>
+                    <a href="{% url 'bottom_wear_details' 'below' %}" class="list-group-item list-group-item-action" aria-current="true">BELOW < 1000</a>
                 </div>
 {#                <div class="list-group">#}
 {#                    <a href="{% url 'mobile_details' 'above' %}" class="list-group-item list-group-item-action" aria-current="true">ABOVE > 10000</a>#}
@@ -24,7 +24,7 @@
             </div>
             <div class="col-sm-8 ">
                 <div class="row">
-                    {% for product in top_wears %}
+                    {% for product in bottom_wears %}
                         <div class="col-sm-4 text-center mb-4">
                             <a href="{% url 'product-detail' product.id %}" class="btn">
                                 <div class="item">
