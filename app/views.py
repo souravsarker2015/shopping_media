@@ -61,6 +61,15 @@ def mobile(request, data=None):
     return render(request, 'app/mobile.html', {'mobiles': mobiles})
 
 
+def top_wear(request, data=None):
+    if data is None:
+        top_wears = Product.objects.filter(category='TW')
+
+    elif data == 'below':
+        top_wears = Product.objects.filter(category='TW').filter(discount_price__lt=1000)
+    return render(request, 'app/top_wear.html', {'top_wears': top_wears})
+
+
 def login(request):
     return render(request, 'app/login.html')
 
