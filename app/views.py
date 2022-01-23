@@ -34,10 +34,6 @@ def buy_now(request):
     return render(request, 'app/buynow.html')
 
 
-def profile(request):
-    return render(request, 'app/profile.html')
-
-
 def address(request):
     return render(request, 'app/address.html')
 
@@ -114,6 +110,25 @@ def customer_registration(request):
         'form': form
     }
     return render(request, 'app/customerregistration.html', context)
+
+
+def profile(request):
+    if request.method == "POST":
+        form = CustomerProfileForm(request.POST)
+        if form.is_valid():
+            user = request.user
+            name = form.cleaned_data['name']
+            locality = form.cleaned_data['locality']
+            city = form.cleaned_data['city']
+            zipcode = form.cleaned_data['zipcode']
+            state = form.cleaned_data['state']
+            reg = Customer(user=user, name=name, locality=locality, city=city, zipcode=zipcode, state=state)
+            reg.save()
+            messages.success(request, 'Congratulations Profile has been updated !!')
+        return render(request, 'app/profile.html', {'form': form, 'active': 'btn-primary'})
+    else:
+        form = CustomerProfileForm()
+        return render(request, 'app/profile.html', {'form': form, 'active': 'btn-primary'})
 
 
 def checkout(request):
