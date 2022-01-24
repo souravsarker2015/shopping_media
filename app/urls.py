@@ -6,7 +6,8 @@ from .forms import LoginForm, CustomerPasswordChangeForm, CustomerPasswordResetF
 urlpatterns = [
     path('', views.home),
     path('product-detail/<int:pk>', views.product_detail, name='product-detail'),
-    path('cart/', views.add_to_cart, name='add-to-cart'),
+    path('add-to-cart/', views.add_to_cart, name='add-to-cart'),
+    path('show_cart/', views.show_cart, name='show_cart'),
     path('buy/', views.buy_now, name='buy-now'),
     path('profile/', views.profile, name='profile'),
     path('address/', views.address, name='address'),

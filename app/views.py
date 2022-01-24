@@ -1,5 +1,5 @@
 from django.contrib import messages
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
 
@@ -27,7 +27,21 @@ def product_detail(request, pk):
 
 
 def add_to_cart(request):
-    return render(request, 'app/addtocart.html')
+    user = request.user
+    product_id = request.GET.get('prod_id')
+    product = Product.objects.get(id=product_id)
+    Cart(user=user, product=product).save()
+    return redirect('show_cart')
+
+
+def show_cart(request):
+    if request.user.is_authenticated:
+        user = request.user
+        cart = Cart.objects.filter(user=user)
+        context = {
+            'carts': cart,
+        }
+        return render(request, 'app/addtocart.html', context)
 
 
 def buy_now(request):
