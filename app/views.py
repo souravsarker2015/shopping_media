@@ -21,7 +21,6 @@ def home(request):
     return render(request, 'app/home.html', context)
 
 
-
 def product_detail(request, pk):
     product = Product.objects.get(id=pk)
     context = {
