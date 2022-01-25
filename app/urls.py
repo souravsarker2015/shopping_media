@@ -26,8 +26,7 @@ urlpatterns = [
     path('bottom_wear_details/<slug:data>', views.bottom_wear, name='bottom_wear_details'),
 
     # path('login/', views.login, name='login'),
-    path('account/login', auth_view.LoginView.as_view(template_name='app/login.html', authentication_form=LoginForm), name='login'),
-    path('logout/', auth_view.LogoutView.as_view(next_page='login'), name='logout'),
+
     # password change
     path('password_change/', auth_view.PasswordChangeView.as_view(template_name='app/passwordchange.html', form_class=CustomerPasswordChangeForm, success_url='/password_change_done/'), name='password_change'),
     path('password_change_done/', auth_view.PasswordChangeDoneView.as_view(template_name='app/password_change_done.html'), name='password_change_done'),

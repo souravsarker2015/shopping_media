@@ -4,6 +4,7 @@ from django.http import JsonResponse
 from django.shortcuts import render, redirect
 from .models import *
 from .forms import *
+from django.contrib.auth.decorators import login_required
 
 
 def home(request):
@@ -20,6 +21,7 @@ def home(request):
     return render(request, 'app/home.html', context)
 
 
+
 def product_detail(request, pk):
     product = Product.objects.get(id=pk)
     context = {
@@ -28,6 +30,7 @@ def product_detail(request, pk):
     return render(request, 'app/productdetail.html', context)
 
 
+@login_required
 def add_to_cart(request):
     user = request.user
     product_id = request.GET.get('prod_id')
@@ -36,6 +39,7 @@ def add_to_cart(request):
     return redirect('show_cart')
 
 
+@login_required
 def show_cart(request):
     if request.user.is_authenticated:
         user = request.user
@@ -63,6 +67,7 @@ def show_cart(request):
             return render(request, 'app/emptycart.html')
 
 
+@login_required
 def plus_cart(request):
     if request.method == "GET":
         prod_id = request.GET['prod_id']
@@ -89,6 +94,7 @@ def plus_cart(request):
         return JsonResponse(data)
 
 
+@login_required
 def minus_cart(request):
     if request.method == "GET":
         prod_id = request.GET['prod_id']
@@ -115,6 +121,7 @@ def minus_cart(request):
         return JsonResponse(data)
 
 
+@login_required
 def remove_cart(request):
     if request.method == "GET":
         prod_id = request.GET['prod_id']
@@ -141,6 +148,7 @@ def buy_now(request):
     return render(request, 'app/buynow.html')
 
 
+@login_required
 def orders(request):
     op = OrderPlaced.objects.filter(user=request.user)
     context = {
@@ -219,6 +227,7 @@ def customer_registration(request):
     return render(request, 'app/customerregistration.html', context)
 
 
+@login_required
 def profile(request):
     if request.method == "POST":
         form = CustomerProfileForm(request.POST)
@@ -238,11 +247,13 @@ def profile(request):
         return render(request, 'app/profile.html', {'form': form, 'active': 'btn-primary'})
 
 
+@login_required
 def address(request):
     addresses = Customer.objects.filter(user=request.user)
     return render(request, 'app/address.html', {'addresses': addresses, 'active': 'btn-primary'})
 
 
+@login_required
 def checkout(request):
     user = request.user
     add = Customer.objects.filter(user=user)
@@ -268,6 +279,7 @@ def checkout(request):
         return render(request, 'app/emptycart.html')
 
 
+@login_required
 def payment_done(request):
     user = request.user
     custid = request.GET.get('custid')
