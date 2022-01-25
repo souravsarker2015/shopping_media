@@ -142,7 +142,11 @@ def buy_now(request):
 
 
 def orders(request):
-    return render(request, 'app/orders.html')
+    op = OrderPlaced.objects.filter(user=request.user)
+    context = {
+        'order_placed': op,
+    }
+    return render(request, 'app/orders.html', context)
 
 
 def change_password(request):
@@ -240,4 +244,35 @@ def address(request):
 
 
 def checkout(request):
-    return render(request, 'app/checkout.html')
+    user = request.user
+    add = Customer.objects.filter(user=user)
+    cart_items = Cart.objects.filter(user=user)
+    amount = 0.0
+    total = 0.0
+    shipping_amount = 50
+
+    cart_product = [p for p in Cart.objects.all() if p.user == user]
+
+    if cart_product:
+        for p in cart_product:
+            temp_amount = p.quantity * p.product.discount_price
+            amount += temp_amount
+        total = amount + shipping_amount
+        context = {
+            'add': add,
+            'total': total,
+            'cart_items': cart_items,
+        }
+        return render(request, 'app/checkout.html', context)
+
+
+def payment_done(request):
+    user = request.user
+    custid = request.GET.get('custid')
+    customer = Customer.objects.get(id=custid)
+    cart = Cart.objects.filter(user=user)
+
+    for c in cart:
+        OrderPlaced(user=user, customer=customer, product=c.product, quantity=c.quantity).save()
+        c.delete()
+    return redirect("orders")
