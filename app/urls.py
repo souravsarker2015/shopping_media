@@ -42,4 +42,5 @@ urlpatterns = [
 
     path('registration/', views.customer_registration, name='customerregistration'),
     path('checkout/', views.checkout, name='checkout'),
+    path('payment_done/', views.payment_done, name='payment_done'),
 ]
