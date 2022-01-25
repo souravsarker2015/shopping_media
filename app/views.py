@@ -264,6 +264,8 @@ def checkout(request):
             'cart_items': cart_items,
         }
         return render(request, 'app/checkout.html', context)
+    else:
+        return render(request, 'app/emptycart.html')
 
 
 def payment_done(request):
