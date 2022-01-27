@@ -23,8 +23,12 @@ def home(request):
 
 def product_detail(request, pk):
     product = Product.objects.get(id=pk)
+    item_already_in_cart = False
+    if request.user.is_authenticated:
+        item_already_in_cart = Cart.objects.filter(Q(product=product.id) & Q(user=request.user)).exists()
     context = {
         'product': product,
+        'item_already_in_cart': item_already_in_cart,
     }
     return render(request, 'app/productdetail.html', context)
 
