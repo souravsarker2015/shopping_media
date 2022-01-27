@@ -12,11 +12,15 @@ def home(request):
     bottom_wears = Product.objects.filter(category='BW')
     mobiles = Product.objects.filter(category='M')
     laptops = Product.objects.filter(category='L')
+    total_item = 0
+    if request.user.is_authenticated:
+        total_item = len(Cart.objects.filter(user=request.user))
     context = {
         'top_wears': top_wears,
         'bottom_wears': bottom_wears,
         'mobiles': mobiles,
         'laptops': laptops,
+        'total_item': total_item,
     }
     return render(request, 'app/home.html', context)
 
@@ -24,11 +28,14 @@ def home(request):
 def product_detail(request, pk):
     product = Product.objects.get(id=pk)
     item_already_in_cart = False
+    total_item = 0
     if request.user.is_authenticated:
         item_already_in_cart = Cart.objects.filter(Q(product=product.id) & Q(user=request.user)).exists()
+        total_item = len(Cart.objects.filter(user=request.user))
     context = {
         'product': product,
         'item_already_in_cart': item_already_in_cart,
+        'total_item': total_item,
     }
     return render(request, 'app/productdetail.html', context)
 
@@ -47,6 +54,8 @@ def show_cart(request):
     if request.user.is_authenticated:
         user = request.user
         cart = Cart.objects.filter(user=user)
+        total_item = 0
+        total_item = len(Cart.objects.filter(user=request.user))
 
         amount = 0.0
         total = 0.0
@@ -63,7 +72,8 @@ def show_cart(request):
             context = {
                 'carts': cart,
                 'amount': amount,
-                'total': total
+                'total': total,
+                'total_item': total_item,
             }
             return render(request, 'app/addtocart.html', context)
         else:
@@ -165,6 +175,9 @@ def change_password(request):
 
 
 def mobile(request, data=None):
+    total_item = 0
+    if request.user.is_authenticated:
+        total_item = len(Cart.objects.filter(user=request.user))
     if data is None:
         mobiles = Product.objects.filter(category='M')
     elif data == 'xiomi' or data == 'samsung':
@@ -175,10 +188,13 @@ def mobile(request, data=None):
 
     elif data == 'above':
         mobiles = Product.objects.filter(category='M').filter(discount_price__gt=10000)
-    return render(request, 'app/mobile.html', {'mobiles': mobiles})
+    return render(request, 'app/mobile.html', {'mobiles': mobiles, 'total_item': total_item})
 
 
 def laptop(request, data=None):
+    total_item = 0
+    if request.user.is_authenticated:
+        total_item = len(Cart.objects.filter(user=request.user))
     if data is None:
         laptops = Product.objects.filter(category="L")
     elif data == 'asus' or data == 'hp' or data == 'dell':
@@ -192,24 +208,30 @@ def laptop(request, data=None):
     elif data == 'below60':
         laptops = Product.objects.filter(category='L').filter(discount_price__lt=60000)
 
-    return render(request, 'app/laptop.html', {'laptops': laptops})
+    return render(request, 'app/laptop.html', {'laptops': laptops, 'total_item': total_item})
 
 
 def top_wear(request, data=None):
+    total_item = 0
+    if request.user.is_authenticated:
+        total_item = len(Cart.objects.filter(user=request.user))
     if data is None:
         top_wears = Product.objects.filter(category='TW')
 
     elif data == 'below':
         top_wears = Product.objects.filter(category='TW').filter(discount_price__lt=1000)
-    return render(request, 'app/top_wear.html', {'top_wears': top_wears})
+    return render(request, 'app/top_wear.html', {'top_wears': top_wears, 'total_item': total_item})
 
 
 def bottom_wear(request, data=None):
+    total_item = 0
+    if request.user.is_authenticated:
+        total_item = len(Cart.objects.filter(user=request.user))
     if data is None:
         bottom_wears = Product.objects.filter(category="BW")
     if data == 'below':
         bottom_wears = Product.objects.filter(category='BW').filter(discount_price__lt=1000)
-    return render(request, 'app/bottom_wear.html', {'bottom_wears': bottom_wears})
+    return render(request, 'app/bottom_wear.html', {'bottom_wears': bottom_wears, 'total_item': total_item})
 
 
 # def login(request):
