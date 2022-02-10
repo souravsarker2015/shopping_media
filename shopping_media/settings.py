@@ -15,6 +15,11 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.sites',
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
     'app',
 ]
 
@@ -44,6 +49,11 @@ TEMPLATES = [
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+    'allauth.account.auth_backends.AuthenticationBackend',
 ]
 
 WSGI_APPLICATION = 'shopping_media.wsgi.application'
@@ -109,6 +119,48 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 LOGIN_REDIRECT_URL = '/'
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 LOGIN_URL = '/account/login/'
 SESSION_ENGINE = "django.contrib.sessions.backends.db"
+
+# Smtp configuration
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = "smtp.gmail.com"
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER = "sourovsarker007@gmail.com"
+EMAIL_HOST_PASSWORD = "01931628674"
+SITE_ID = 2
+# SOCIAL_ACCOUNT_PROVIDERS = {
+#     'google': {
+#         'SCOPE': [
+#             'profile',
+#             'email'
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }
+SOCIAL_ACCOUNT_PROVIDERS = {
+    'google': {
+        'APP': {
+            'client_id': '927034068354-0jbdk3k9j4kudt3snhlftdbl144k9ruh.apps.googleusercontent.com',
+            'secret': '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',
+            'key': ''
+        }
+    }
+
+}
+
+# SOCIAL_ACCOUNT_PROVIDERS = {
+#     'app': {
+#         'SCOPE': [
+#             'profile',
+#             'email'
+#         ],
+#         'AUTH_PARAMS': {
+#             'access_type': 'online',
+#         }
+#     }
+# }

@@ -102,7 +102,6 @@ def plus_cart(request):
             'quantity': c.quantity,
             'amount': amount,
             'total': total,
-
         }
         return JsonResponse(data)
 
@@ -235,7 +234,7 @@ def bottom_wear(request, data=None):
 
 
 # def login(request):
-#     return render(request, 'app/login.html')
+#     return render(request, 'app/login1.html')
 
 
 def customer_registration(request):

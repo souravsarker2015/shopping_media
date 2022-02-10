@@ -1,5 +1,6 @@
 {% extends 'app/base.html' %}
 {% load static %}
+{% load socialaccount %}
 {% block title %}Login{% endblock title %}
 {% block main-content %}
     <div class="container">
@@ -8,14 +9,18 @@
                 <h3>Login</h3>
                 <hr>
                 <form action="" method="post" novalidate class="shadow p-5">
-                {% csrf_token %}
+                    {% csrf_token %}
                     {% for fm in form %}
                         <div class="form-group mb-3">
                             {{ fm.label_tag }} {{ fm }} <small class="text-danger">{{ fm.errors|striptags }}</small>
                         </div>
 
                     {% endfor %}
+                    <a href="{% provider_login_url 'google' method='oauth2' %}">
+                        <p class="d-inline">Login with Google</p>
+                        <img src="{% static 'app/images/google.png' %}" height="32" width="32" alt=""></a><br>
                     <small><a href="{% url 'password_reset' %}">Forgot Password ?</a></small> <br>
+
                     <input type="submit" class="btn btn-primary mt-4" value="Login">
                     <br>
                     <div class="text-center text-primary fw-bold"><small>New to Shopping Media ? <a href="{% url 'customerregistration' %}"
