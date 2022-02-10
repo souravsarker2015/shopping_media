@@ -36,7 +36,7 @@
     <div class="container">
         <div class="row bg-danger text-center p-5 text-white border-bottom shadow">
             <h1>SALE IS LIVE NOW</h1>
-            <span>5% Instant Discount on City Bank Credit and Debit Card</span>
+            <span>15% Instant Discount on City Bank Credit and Debit Card</span>
             <small class="fw-lighter">Term and Condition Applied (For details visit Bank's official Website)</small>
         </div>
     </div>
@@ -132,7 +132,7 @@
         <div class="owl-carousel" id="slider3">
             {% for laptop in laptops %}
                 <a href="{% url 'product-detail' laptop.id %}" class="btn">
-                    <div class="item"><img src="{{ laptop.product_img.url }}" alt="" height="200px"><span class="fw-bold">{{ laptop.title}}</span><br><span class="fs-5">Taka. {{ laptop.selling_price }}</span></div>
+                    <div class="item"><img src="{{ laptop.product_img.url }}" alt="" height="200px" width="200px"><span class="fw-bold">{{ laptop.title}}</span><br><span class="fs-5">Taka. {{ laptop.selling_price }}</span></div>
                 </a>
             {% endfor %}
         </div>
