@@ -320,18 +320,11 @@ def payment_done(request):
 
 
 def search_product(request):
-    if 'q' in request.GET:
+    if request.method == "GET":
         q = request.GET.get('q')
         multiple_q = Q(Q(title__icontains=q) | Q(brand__icontains=q))
         product = Product.objects.filter(multiple_q)
-        if product is not None:
-            context = {
-                'products': product,
-            }
-            return render(request, 'app/search_items.html', context)
-        else:
+        if len(product) == 0:
             product = Product.objects.all()
-            context = {
-                'products': product,
-            }
-            return render(request, 'app/search_items.html', context)
+        context = {'products': product}
+        return render(request, 'app/search_items.html', context)
