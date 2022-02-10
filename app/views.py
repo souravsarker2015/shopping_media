@@ -42,11 +42,14 @@ def product_detail(request, pk):
 
 @login_required
 def add_to_cart(request):
-    user = request.user
-    product_id = request.GET.get('prod_id')
-    product = Product.objects.get(id=product_id)
-    Cart(user=user, product=product).save()
-    return redirect('show_cart')
+    if request.user.is_authenticated:
+        user = request.user
+        product_id = request.GET.get('prod_id')
+        product = Product.objects.get(id=product_id)
+        Cart(user=user, product=product).save()
+        return redirect('show_cart')
+    else:
+        return redirect('account/login/')
 
 
 @login_required
@@ -314,3 +317,21 @@ def payment_done(request):
         OrderPlaced(user=user, customer=customer, product=c.product, quantity=c.quantity).save()
         c.delete()
     return redirect("orders")
+
+
+def search_product(request):
+    if 'q' in request.GET:
+        q = request.GET.get('q')
+        multiple_q = Q(Q(title__icontains=q) | Q(brand__icontains=q))
+        product = Product.objects.filter(multiple_q)
+        if product is not None:
+            context = {
+                'products': product,
+            }
+            return render(request, 'app/search_items.html', context)
+        else:
+            product = Product.objects.all()
+            context = {
+                'products': product,
+            }
+            return render(request, 'app/search_items.html', context)

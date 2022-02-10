@@ -24,6 +24,7 @@ urlpatterns = [
     path('top_wear_details/<slug:data>', views.top_wear, name='top_wear_details'),
     path('bottom_wear/', views.bottom_wear, name='bottom_wear'),
     path('bottom_wear_details/<slug:data>', views.bottom_wear, name='bottom_wear_details'),
+    path('search/', views.search_product, name='search'),
 
     # path('login/', views.login, name='login'),
 
