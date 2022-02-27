@@ -6,7 +6,7 @@ SECRET_KEY = 'django-insecure-p-^a*@pj+11c(z_0iy5)5s-fd%1*=7p4n08k8=b4f(1+!8eia)
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['shopping-media.herokuapp.com', '127.0.0.1:8000']
+ALLOWED_HOSTS = ['shopping-media.herokuapp.com', '127.0.0.1']
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -58,8 +58,6 @@ AUTHENTICATION_BACKENDS = [
 
 WSGI_APPLICATION = 'shopping_media.wsgi.application'
 
-# Database
-# https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
 # DATABASES = {
 #     'default': {
